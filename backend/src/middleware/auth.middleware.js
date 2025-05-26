@@ -17,7 +17,7 @@ export const protectRoute = async (req, res, next) => {
       return res.status(401).json({ error: "Unauthorized: Invalid token" });
     }
 
-    const user = User.findById(decoded.userId).select("-password");
+    const user = await User.findById(decoded.userId).select("-password");
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
@@ -26,7 +26,7 @@ export const protectRoute = async (req, res, next) => {
 
     next();
   } catch (error) {
-    console.error("Error in protectRoute middleware, ", error.message);
+    console.error("Error in protectRoute middleware: ", error.message);
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
