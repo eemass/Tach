@@ -6,9 +6,9 @@ export const getUsers = async (req, res) => {
   try {
     const loggedInUserId = req.user._id;
 
-    const filteredUsers = User.find({ _id: { $ne: loggedInUserId } }).select(
-      "-password"
-    );
+    const filteredUsers = await User.find({
+      _id: { $ne: loggedInUserId },
+    }).select("-password");
 
     res.status(200).json(filteredUsers);
   } catch (error) {
@@ -22,7 +22,7 @@ export const getMessages = async (req, res) => {
     const { id: userToChatId } = req.params;
     const myId = req.user._id;
 
-    const messages = Message.find({
+    const messages = await Message.find({
       $or: [
         { senderId: myId, receiverId: userToChatId },
         {
@@ -48,7 +48,7 @@ export const sendMessage = async (req, res) => {
     let imageUrl;
 
     if (image) {
-      const uploadResponse = await cloudinary.uploader.upload(img);
+      const uploadResponse = await cloudinary.uploader.upload(image);
       imageUrl = uploadResponse.secure_url;
     }
 
