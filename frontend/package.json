@@ -18,7 +18,6 @@
     "react-hot-toast": "^2.5.2",
     "react-router-dom": "^7.6.0",
     "socket.io-client": "^4.8.1",
-    "tach": "file:..",
     "zustand": "^5.0.5"
   },
   "devDependencies": {
